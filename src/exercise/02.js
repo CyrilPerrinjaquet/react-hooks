@@ -66,7 +66,7 @@ function useLocalStorageState(key, defaultValue, {
     }
   )
 
-  // ? We use "useRef" to keep track of the previous Key, we use it because we don't want to re-render every time the key changes
+  ? We use "useRef" to keep track of the previous Key, we use it because we don't want to re-render every time the key changes
   const prevKeyRef = React.useRef(key)
 
 

@@ -40,7 +40,6 @@ function Board() {
     //
     // 🐨 set the squares to your copy
     setSquares(newSquaresArray)
-    localStorage.setItem('squares', newSquaresArray);
   }
 
   function restart() {
@@ -138,6 +137,24 @@ export default App
 
 
 01
+
+const [squares, setSquares] = React.useState(
+    () =>
+      JSON.parse(window.localStorage.getItem('squares')) || Array(9).fill(null),
+  )
+
+  React.useEffect(() => {
+    window.localStorage.setItem('squares', JSON.stringify(squares))
+  }, [squares])
+
+  
+  
+02
+
+const [squares, setSquares] = useLocalStorageState('squares', Array(9).fill(null))
+
+03
+
 
 
 

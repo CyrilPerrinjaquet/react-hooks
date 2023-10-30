@@ -22,7 +22,7 @@ function PokemonInfo({pokemonName}) {
   }) 
 
   // We can destructure the status object by doing : 
-  // const {status, pokemon, error} = state
+ const {status, pokemon, error} = state
 
   // 🐨 use React.useEffect where the callback should be called whenever the
   // pokemon name changes.

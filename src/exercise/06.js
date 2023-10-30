@@ -15,9 +15,14 @@ import {
 
 function PokemonInfo({pokemonName}) {
   // 🐨 Have state for the pokemon (null)
-  const [pokemon, setPokemon] = React.useState(null)
-  const [error, setError] = React.useState(null)
-  const [status, setStatus] = React.useState('idle')
+  const [state, setState] = React.useState({
+    status: 'idle',
+    pokemon: null,
+    error: null,
+  }) 
+
+  // We can destructure the status object by doing : 
+  // const {status, pokemon, error} = state
 
   // 🐨 use React.useEffect where the callback should be called whenever the
   // pokemon name changes.
@@ -37,15 +42,13 @@ function PokemonInfo({pokemonName}) {
     if (!pokemonName) {
       return
     }
-    setStatus('pending')
+    setState({status: 'pending'})
     fetchPokemon(pokemonName).then(
       pokemonData => {
-        setPokemon(pokemonData)
-        setStatus('resolved')
+        setState({status: 'resolved', pokemon: pokemonData})
       },
       error => {
-        setError(error)
-        setStatus('rejected')
+        setState({status: 'rejected', error: error})
       },
     )
   }, [pokemonName])
@@ -155,5 +158,45 @@ function PokemonInfo({pokemonName}) {
     return <PokemonDataView pokemon={pokemon} />
   }
 
+  03 
+
+  function PokemonInfo({pokemonName}) {
+
+  const [state, setState] = React.useState({
+    status: 'idle',
+    pokemon: null,
+    error: null,
+  }) 
+
+  React.useEffect(() => {
+    if (!pokemonName) {
+      return
+    }
+    setState({status: 'pending'})
+    fetchPokemon(pokemonName).then(
+      pokemonData => {
+        setState({status: 'resolved', pokemon: pokemonData})
+      },
+      error => {
+        setState({status: 'rejected', error: error})
+      },
+    )
+  }, [pokemonName])
+
+  if (status === 'idle') {
+    return 'Submit a pokemon'
+  } else if (status === 'pending') {
+    return <PokemonInfoFallback name={pokemonName} />
+  } else if (status === 'rejected') {
+    return (
+      <div role="alert">
+        There was an error:{' '}
+        <pre style={{whiteSpace: 'normal'}}>{error.message}</pre>
+      </div>
+    )
+  } else {
+    return <PokemonDataView pokemon={pokemon} />
+  }
+}
 
 */

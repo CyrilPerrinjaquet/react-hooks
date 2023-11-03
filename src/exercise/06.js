@@ -13,26 +13,23 @@ import {
   PokemonDataView,
 } from '../pokemon'
 
-class ErrorBoundary extends React.Component {
-  state = {error: null}
+import { ErrorBoundary } from 'react-error-boundary'
 
-  static getDerivedStateFromError(error) {
-    return {error}
-  }
+// class ErrorBoundary extends React.Component {
+//   state = {error: null}
 
-  render() {
-    const {error} = this.state
-    if (error) {
-      return <this.props.FallbackComponent error={error} />
-      // return (
-      //   <div role="alert">
-      //     There was an error:{' '}
-      //     <pre style={{whiteSpace: 'normal'}}>{error.message}</pre>
-      //   </div>
-      // )
-    }
-  }
-}
+//   static getDerivedStateFromError(error) {
+//     return {error}
+//   }
+
+//   render() {
+//     const {error} = this.state
+//     if (error) {
+//       return <this.props.FallbackComponent error={error} />
+//     }
+//     return this.props.children
+//   }
+// }
 
 function PokemonInfo({pokemonName}) {
   // 🐨 Have state for the pokemon (null)
@@ -106,7 +103,7 @@ function App() {
       <PokemonForm pokemonName={pokemonName} onSubmit={handleSubmit} />
       <hr />
       <div className="pokemon-info">
-        <ErrorBoundary FallbackComponent={ErrorFallback}>
+        <ErrorBoundary key={pokemonName} FallbackComponent={ErrorFallback}>
           <PokemonInfo pokemonName={pokemonName} />
         </ErrorBoundary>
       </div>
@@ -239,12 +236,6 @@ class ErrorBoundary extends React.Component {
     const {error} = this.state
     if (error) {
       return <this.props.FallbackComponent error={error} />
-      // return (
-      //   <div role="alert">
-      //     There was an error:{' '}
-      //     <pre style={{whiteSpace: 'normal'}}>{error.message}</pre>
-      //   </div>
-      // )
     }
   }
 }
@@ -315,6 +306,13 @@ function App() {
 
 05
 
+   <ErrorBoundary key={pokemonName} FallbackComponent={ErrorFallback}>
+      <PokemonInfo pokemonName={pokemonName} />
+    </ErrorBoundary>
+
+06
+
+import { ErrorBoundary } from 'react-error-boundary'
 
 
 */
